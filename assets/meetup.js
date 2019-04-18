@@ -1,12 +1,14 @@
 // JS for Get Out More - Project 1
-
+'use strict'
 // weather api
 // This is Kris's API key for the weather
 const APIKey = "e9cf524d552ebbdf618ed3daa5819d90";
 
 // these are the variables that will hold our user input data for city and state
-// var userCity = "Baltimore";
-var userCity = document.getElementById("inputCity").value;
+// remove the default text values for these userCity and userState variables once our submit button works
+// i have written what i think will grab the right values from our input fields, they're just commented out for now
+var userCity = "Baltimore";
+//var userCity = document.getElementById("inputCity").value;
 console.log(userCity);
 var userState = "Maryland";
 // var userState = document.getElementById("inputState").value;
@@ -15,6 +17,9 @@ var userState = "Maryland";
 so that userCity and userState variables will be populated with the values of their input fields
 */
 var weatherLocation = `${userCity},${userState}`;
+var weatherDescription = "";
+var weatherIcon = null;
+var temperature = null;
 
 // Here we are building the URL we need to query the database
 
@@ -31,7 +36,9 @@ var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + weatherLo
 "&units=imperial&appid=" + APIKey;
 
 // Here we run our AJAX call to the OpenWeatherMap API
-// this needs to be set up with a click event
+// this needs to be set up with a click event with our submit button
+//
+// the fetch request needs to have an if statement about if the browser supports fetch
 fetch(queryURL, {
     method: "GET"
     })
@@ -45,17 +52,27 @@ fetch(queryURL, {
 
         // pulling a piece of the JSON data, in this case the weather condition (e.g. "clear sky")
         console.log(response.list[0].weather[0].description);
+        weatherDescription = response.list[0].weather[0].description;
+        // testing that the variable is capturing the desired target (e.g. "clear sky")
+        console.log(weatherDescription);
+        // grabbing the weather icon image number that will be used in the img tage below
+        weatherIcon = response.list[0].weather[0].icon;
+        // grabbing the temperature data -- this needs to be shortened / rounded to just two digits, no decimals
+        temperature = response.list[0].main.temp;
 
-        // Transfer content to HTML -- this is from the class activity and needs to be updated
-        // let heading = document.createElement("h1");
-        // heading.innerText = `${response.name} Weather Details`;
-        // document.querySelector(".city").appendChild(heading);
+        // assigning weather data into variables
+        var weatherDisplay = document.createElement("div");
+        console.log(weatherDescription);
+        // pull weather icons from: https://openweathermap.org/weather-conditions to use in img tags
+        weatherDisplay.innerHTML = `<p><img src="http://openweathermap.org/img/w/${weatherIcon}.png"> ${temperature}F ${weatherDescription}</p>`;
+        // appending the weatherDisplay html into the resultsDisplay div
+        document.getElementById("resultsDisplay").appendChild(weatherDisplay);
+
         
-        // document.querySelector(".wind").innerText = `Wind Speed: ${response.wind.speed}`;
-        // document.querySelector(".humidity").innerText = `Humidity: ${response.main.humidity}`;
-        // document.querySelector(".temp").innerText = `Temperature (F) ${response.main.temp}`;
-
-
     });
   
-// pull weather icons from: https://openweathermap.org/weather-conditions to use in img tags
+// need to add an XHR request in case fetch is not support it
+/* XHR request needs to be tested by setting the if statement for the fetch request to "not supported"
+so it will default to the XHR request instead. this can be verified with a console.log within the
+XHR request, e.g. "XHR is running."
+*/
