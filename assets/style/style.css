@@ -21,7 +21,8 @@ h3 {
 
 .row{
     margin: auto;
-        
+    width: 80%;    
+    padding: 10px;    
 }
 
 .form-row{
