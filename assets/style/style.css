@@ -13,3 +13,19 @@ h3 {
     font-family: 'Dokdo', cursive;
     text-align: center;
 }
+
+.btn-outline-danger {
+    position: relative;
+    top: 32px;
+}
+
+.row{
+    margin: auto;
+    width: 80%;    
+    padding: 10px;    
+}
+
+.form-row{
+    position: relative;
+    left: 80px;
+}
