@@ -52,22 +52,34 @@ fetch(queryURL, {
 
         // pulling a piece of the JSON data, in this case the weather condition (e.g. "clear sky")
         console.log(response.list[0].weather[0].description);
-        weatherDescription = response.list[0].weather[0].description;
+        // weatherDescription = response.list[0].weather[0].description;
         // testing that the variable is capturing the desired target (e.g. "clear sky")
         console.log(weatherDescription);
         // grabbing the weather icon image number that will be used in the img tage below
-        weatherIcon = response.list[0].weather[0].icon;
+        // weatherIcon = response.list[0].weather[0].icon;
         // grabbing the temperature data -- this needs to be shortened / rounded to just two digits, no decimals
-        temperature = response.list[0].main.temp;
+        // temperature = response.list[0].main.temp;
 
         // assigning weather data into variables
         var weatherDisplay = document.createElement("div");
         console.log(weatherDescription);
-        // pull weather icons from: https://openweathermap.org/weather-conditions to use in img tags
-        weatherDisplay.innerHTML = `<p><img src="http://openweathermap.org/img/w/${weatherIcon}.png"> ${temperature}F ${weatherDescription}</p>`;
-        // appending the weatherDisplay html into the resultsDisplay div
-        document.getElementById("resultsDisplay").appendChild(weatherDisplay);
 
+        // these are the segments of the 5-day forecast that are for noon each day
+        let weatherForecasts = [3, 11, 19, 27, 35];
+
+        // loop through our newly added train data and add it into our schedule table
+        for (let segment of weatherForecasts) {
+            let newWeatherColumn = document.createElement("div");
+            newWeatherColumn.setAttribute("class", "col-2");
+            weatherIcon = response.list[segment].weather[0].icon;
+            temperature = response.list[segment].main.temp;
+            weatherDescription = response.list[segment].weather[0].description;
+            newWeatherColumn.innerHTML = `<p><img src="https://openweathermap.org/img/w/${weatherIcon}.png"> ${temperature}F ${weatherDescription}</p>`;
+            document.getElementById("resultsDisplay").appendChild(newWeatherColumn);
+        }
+
+
+        // pull weather icons from: https://openweathermap.org/weather-conditions to use in img tags
         
     });
   
