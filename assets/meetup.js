@@ -60,9 +60,17 @@ fetch(queryURL, {
         // grabbing the temperature data -- this needs to be shortened / rounded to just two digits, no decimals
         // temperature = response.list[0].main.temp;
 
-        // assigning weather data into variables
-        var weatherDisplay = document.createElement("div");
-        console.log(weatherDescription);
+        // setting up an initial 5-day forecast div to display before the weather data
+        var forecastIntro = document.createElement("div");
+        forecastIntro.setAttribute("class", "col-2");
+        forecastIntro.innerHTML = `<p>5-day weather forecast for ${userCity}, ${userState}</p>`;
+        document.getElementById("resultsDisplay").appendChild(forecastIntro);
+
+        // displaying the day of the week along with the weather
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']; 
+        var dayNum = null;
+        var dayOfWeek = days[dayNum];
+        console.log(dayOfWeek);
 
         // these are the segments of the 5-day forecast that are for noon each day
         let weatherForecasts = [3, 11, 19, 27, 35];
@@ -71,15 +79,21 @@ fetch(queryURL, {
         for (let segment of weatherForecasts) {
             let newWeatherColumn = document.createElement("div");
             newWeatherColumn.setAttribute("class", "col-2");
+            // converting the unix date "dt" value to the day of the week 
+            dayNum = new Date(response.list[segment].dt * 1000).getDay();
+            dayOfWeek = days[dayNum];
+            // grabbing the weather icon code, temperature (rounded to the nearest integer), and weather description
+            // pulled weather icons from: https://openweathermap.org/weather-conditions to use in img tags
             weatherIcon = response.list[segment].weather[0].icon;
-            temperature = response.list[segment].main.temp;
+            temperature = Math.round(response.list[segment].main.temp);
             weatherDescription = response.list[segment].weather[0].description;
-            newWeatherColumn.innerHTML = `<p><img src="https://openweathermap.org/img/w/${weatherIcon}.png"> ${temperature}F ${weatherDescription}</p>`;
+            // piecing the weather data together to be displayed in a column for each day of the forecast
+            newWeatherColumn.innerHTML = `<p>${dayOfWeek}</p><p><img src=
+            "https://openweathermap.org/img/w/${weatherIcon}.png"> ${temperature}°F ${weatherDescription}</p>`;
             document.getElementById("resultsDisplay").appendChild(newWeatherColumn);
         }
 
 
-        // pull weather icons from: https://openweathermap.org/weather-conditions to use in img tags
         
     });
   
