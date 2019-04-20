@@ -1,6 +1,9 @@
 
 Group project 
-PROJECT 1 PROPOSAL
+[Link to slides for presentation](https://docs.google.com/presentation/d/11oRn_85tc89XasHDuHbhZ2IrXGL9rz70Ui5_V6s8-04/edit?usp=sharing)
+
+
+PROJECT 1 INITIAL PROPOSAL
 
 “GET OUT MORE”
 
