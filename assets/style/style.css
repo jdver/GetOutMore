@@ -1,5 +1,5 @@
 body{
-	background: url("../images/background.jpg") no-repeat center center fixed;
+	background: url("../images/hiking.jpg") no-repeat center center fixed;
 	background-size: cover;
 
 }
@@ -7,11 +7,17 @@ body{
 h1 {
     font-family: 'Dokdo', cursive;
     text-align: center;
+    color: black;
 }
 
 h3 {
     font-family: 'Dokdo', cursive;
     text-align: center;
+    color: white;
+}
+
+#inputCityLine{
+    color: white;
 }
 
 .btn-outline-danger {
