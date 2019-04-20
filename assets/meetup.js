@@ -96,15 +96,24 @@ document.getElementById("searchButton").addEventListener("click", function(event
         // Log the resulting object
         console.log(response);
 
-        for (let i = 0; i < 5; i++) {
-            let newEventColumn = document.createElement("div");
-            newEventColumn.setAttribute("class", "col-2");
-            var eventImage = response.items[i].pagemap.cse_thumbnail[0].src;
-            console.log(eventImage);
-            var eventDisplay = document.createElement("div");
-            eventDisplay.innerHTML = `<img src="${eventImage}" alt="display">`;
-            document.getElementById("eventsDisplay").appendChild(eventDisplay);
-        }
+            for (let i = 0; i < 5; i++) {
+              let newEventRow = document.createElement("div");
+              newEventRow.setAttribute("class", "row");
+              let newEventColumn = document.createElement("div");
+              newEventColumn.setAttribute("class", "col-4");
+              newEventColumn.appendChild(newEventRow);
+              var eventImage = response.items[i].pagemap.cse_thumbnail[0].src;
+              console.log(eventImage);
+              let columnTwo = document.createElement("div");
+              columnTwo.setAttribute("class", "col-8");
+              columnTwo.appendChild(newEventRow);
+              var eventText = response.items[i].snippet;
+              columnTwo.innerHTML = `<p>${eventText}</p>`;
+              console.log(eventText);
+              newEventColumn.innerHTML = `<img src="${eventImage}" alt="display"> <p>${columnTwo}</p>`;
+              document.getElementById("eventsDisplay").appendChild(newEventColumn);
+
+          }
         
         });
     
@@ -177,15 +186,23 @@ document.getElementById("searchButton").addEventListener("click", function(event
                     let response = JSON.parse(xhr2.responseText);
 
                     console.log(response);
-
                     for (let i = 0; i < 5; i++) {
+                        let newEventRow = document.createElement("div");
+                        newEventRow.setAttribute("class", "row");
                         let newEventColumn = document.createElement("div");
-                        newEventColumn.setAttribute("class", "col-2");
+                        newEventColumn.setAttribute("class", "col-4");
+                        newEventColumn.appendChild(newEventRow);
                         var eventImage = response.items[i].pagemap.cse_thumbnail[0].src;
                         console.log(eventImage);
-                        var eventDisplay = document.createElement("div");
-                        eventDisplay.innerHTML = `<img src="${eventImage}" alt="display">`;
-                        document.getElementById("eventsDisplay").appendChild(eventDisplay);
+                        let columnTwo = document.createElement("div");
+                        columnTwo.setAttribute("class", "col-8");
+                        columnTwo.appendChild(newEventRow);
+                        var eventText = response.items[i].snippet;
+                        columnTwo.innerHTML = `<p>${eventText}</p>`;
+                        console.log(eventText);
+                        newEventColumn.innerHTML = `<img src="${eventImage}" alt="display"> <p>${columnTwo}</p>`;
+                        document.getElementById("eventsDisplay").appendChild(newEventColumn);
+
                     }
                 }
             }
@@ -200,16 +217,15 @@ document.getElementById("searchButton").addEventListener("click", function(event
                 // and displaying the New Search button
                 document.getElementById("newSearchButton").removeAttribute("style");
 
-    }
-    
+
 });
 
 // click event for New Search button
 document.getElementById("newSearchButton").addEventListener("click", function(event) {
     // we prevent the default of refreshing the page when the form button is pressed  
     event.preventDefault();
-    // TODO: clear out the event data
-    //
+    // clear out the event data
+    document.getElementById("eventsDisplay").innerHTML = ""
     // clear out the weather data
     document.getElementById("weatherDisplay").innerHTML = "";
     // reset and show the homepage content again
