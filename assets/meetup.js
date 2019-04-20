@@ -2,7 +2,7 @@
 'use strict'
 // weather api
 // This is Kris's API key for the weather
-const APIKey = "e9cf524d552ebbdf618ed3daa5819d90";
+const APIKEY = "e9cf524d552ebbdf618ed3daa5819d90";
 
 // these are the variables that will hold our user input data for city and state
 // remove the default text values for these userCity and userState variables once our submit button works
@@ -25,8 +25,6 @@ var temperature = null;
 // var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + weatherLocation +
 // "&units=imperial&appid=" + APIKey;
 
-
-
 document.getElementById("searchButton").addEventListener("click", function(event) {
     // we prevent the default of refreshing the page when the form button is pressed  
     event.preventDefault();
@@ -37,7 +35,7 @@ document.getElementById("searchButton").addEventListener("click", function(event
 
     // here is the url we would use for a forecast for a given city (gives weather in 3 hour intervals)
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + weatherLocation +
-    "&units=imperial&appid=" + APIKey;
+    "&units=imperial&appid=" + APIKEY;
 
     // Here we run our AJAX call to the OpenWeatherMap API
     // this needs to be set up with a click event with our submit button
@@ -94,7 +92,35 @@ document.getElementById("searchButton").addEventListener("click", function(event
 
             
         });
-    
+  
+    const APIKEY2 = "AIzaSyDwS9kORdJagydPY9p50u2rkQdlt46d1WM"
+    var queryURL2 = "https://www.googleapis.com/customsearch/v1?key=" + APIKEY2 +
+    "&cx=017456614146260198716:zjzb0jps8te&q=" + userCity + "+" + userState + "+events";
+
+    // Here we run our AJAX call to the OpenWeatherMap API
+    // this needs to be set up with a click event
+    fetch(queryURL2, {
+    method: "GET"
+    })
+    .then((result) => result.json()) // make our response object a json object of the results
+    .then((response) => { // accept the result.json() returned from the previous callback as response
+    // Log the queryURL
+    console.log(queryURL2);
+
+    // Log the resulting object
+    console.log(response);
+
+      for (let i = 0; i < 5; i++) {
+          let newEventColumn = document.createElement("div");
+          newEventColumn.setAttribute("class", "col-2");
+          var eventImage = response.items[i].pagemap.cse_thumbnail[0].src;
+          console.log(eventImage);
+          var eventDisplay = document.createElement("div");
+          eventDisplay.innerHTML = `<img src="${eventImage}" alt="display">`;
+          document.getElementById("eventsDisplay").appendChild(eventDisplay);
+      }
+      
+    });
     // need to add an XHR request in case fetch is not supported
     /* XHR request needs to be tested by setting the if statement for the fetch request to "not supported"
     so it will default to the XHR request instead. this can be verified with a console.log within the
@@ -117,4 +143,3 @@ document.getElementById("newSearchButton").addEventListener("click", function(ev
     // hide the New Search button
     document.getElementById("newSearchButton").setAttribute("style", "display: none");
 });
-
