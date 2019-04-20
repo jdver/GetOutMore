@@ -67,9 +67,42 @@ fetch(queryURL, {
         weatherDisplay.innerHTML = `<p><img src="http://openweathermap.org/img/w/${weatherIcon}.png"> ${temperature}F ${weatherDescription}</p>`;
         // appending the weatherDisplay html into the resultsDisplay div
         document.getElementById("resultsDisplay").appendChild(weatherDisplay);
-
-        
     });
+
+
+
+const APIKey2 = "AIzaSyDwS9kORdJagydPY9p50u2rkQdlt46d1WM"
+var queryURL2 = "https://www.googleapis.com/customsearch/v1?key=" + APIKey2 +
+"&cx=017456614146260198716:zjzb0jps8te&q=" + userCity + "+" + userState + "+events";
+
+// Here we run our AJAX call to the OpenWeatherMap API
+// this needs to be set up with a click event
+fetch(queryURL2, {
+method: "GET"
+})
+.then((result) => result.json()) // make our response object a json object of the results
+.then((response) => { // accept the result.json() returned from the previous callback as response
+// Log the queryURL
+console.log(queryURL2);
+
+// Log the resulting object
+console.log(response);
+
+for (let i = 0; i < 4; i++) {
+    let newEventColumn = document.createElement("div");
+    newEventColumn.setAttribute("class", "col-2");
+    var eventImage = response.items[i].pagemap.cse_thumbnail[0].src;
+    console.log(eventImage);
+    var eventDisplay = document.createElement("div");
+    eventDisplay.innerHTML = `<img src="${eventImage}" alt="display">`;
+    document.getElementById("eventsDisplay").appendChild(eventDisplay);
+};
+});
+
+
+
+
+
   
 // need to add an XHR request in case fetch is not support it
 /* XHR request needs to be tested by setting the if statement for the fetch request to "not supported"
