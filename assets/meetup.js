@@ -11,7 +11,7 @@ var weatherDescription = "";
 var weatherIcon = null;
 var temperature = null;
 
-document.getElementById("searchButton").addEventListener("click", function(event) {
+document.getElementById("searchButton").addEventListener("click", function(event){
     // we prevent the default of refreshing the page when the form button is pressed  
     event.preventDefault();
     
@@ -20,11 +20,9 @@ document.getElementById("searchButton").addEventListener("click", function(event
     var weatherLocation = `${userCity},${userState}`;
 
     // here is the url for requesting a forecast for a given city (gives weather in 3-hour intervals)
-    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + weatherLocation +
-    "&units=imperial&appid=" + APIKEY;
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + weatherLocation + "&units=imperial&appid=" + APIKEY;
     // here is the url for requesting events for a given city
-    var queryURL2 = "https://www.googleapis.com/customsearch/v1?key=" + APIKEY2 +
-        "&cx=017456614146260198716:zjzb0jps8te&q=" + userCity + "+" + userState + "+events";
+    var queryURL2 = "https://www.googleapis.com/customsearch/v1?key=" + APIKEY2 + "&cx=017456614146260198716:zjzb0jps8te&q=" + userCity + "+" + userState + "+events";
 
     // Here we run our AJAX call to the OpenWeatherMap API
     if (window.fetch) {
@@ -163,9 +161,7 @@ document.getElementById("searchButton").addEventListener("click", function(event
                         newWeatherColumn.innerHTML = `<p>${dayOfWeek}</p><p><img src=
                         "https://openweathermap.org/img/w/${weatherIcon}.png"> ${temperature}°F ${weatherDescription}</p>`;
                         document.getElementById("weatherDisplay").appendChild(newWeatherColumn);
-                }
-
-                
+                    }    
                 }
             }
         }
@@ -216,7 +212,7 @@ document.getElementById("searchButton").addEventListener("click", function(event
                 document.getElementById("homepageSearchRow").setAttribute("style", "display: none");
                 // and displaying the New Search button
                 document.getElementById("newSearchButton").removeAttribute("style");
-
+    }
 
 });
 
